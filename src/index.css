@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+html, body {
+    font-family: "Comic Neue", "Helvetica", "Arial", sans-serif;
+    font-weight: 700;
+}
+
+body {
+    background: url('/beams-basic.png') no-repeat top center;
+}
