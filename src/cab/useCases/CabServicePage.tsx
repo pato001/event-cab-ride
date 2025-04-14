@@ -9,7 +9,7 @@ import {
 } from '@design-system';
 import { useEffect, useState } from 'react';
 
-type Cab = {
+export type Cab = {
     id: string;
     model: string;
     segment: string;
@@ -21,6 +21,19 @@ type Cab = {
     status: 'ARRIVING_SOON' | 'ARRIVED';
     isInTrafficJam: boolean;
 };
+
+export const sortCabsList=(cabs:Cab[])=>{
+  const sortedData= cabs.toSorted((a, b) => {
+    if(a.minutesAway!== b.minutesAway)
+    return a.minutesAway - b.minutesAway
+  if(a.isInTrafficJam !== b.isInTrafficJam){
+    if(a.isInTrafficJam) return 1
+    else return -1
+  }
+  return 0
+});
+  return sortedData;
+}
 
 export const CabServicePage = () => {
     const [destination, setDestination] = useState('');
@@ -70,7 +83,7 @@ export const CabServicePage = () => {
                         ]}
                     />
                 </FormField>
-                {cabs.map((cab) => (
+                {sortCabsList(cabs).map((cab) => (
                     <CabListItem
                         key={cab.id}
                         model={cab.model}
