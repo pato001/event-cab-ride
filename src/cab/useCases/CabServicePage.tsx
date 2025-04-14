@@ -9,23 +9,47 @@ import {
 } from '@design-system';
 import { useEffect, useState } from 'react';
 
+type Cab = {
+    id: string;
+    model: string;
+    segment: string;
+    trunk: string;
+    capacity: number;
+    rating?: number;
+    ratings: number;
+    minutesAway: number;
+    status: 'ARRIVING_SOON' | 'ARRIVED';
+    isInTrafficJam: boolean;
+};
+
 export const CabServicePage = () => {
     const [destination, setDestination] = useState('');
+    const [socket, setSocket] = useState<WebSocket>();
+    const [cabs, setCabs] = useState<Cab[]>([]);
 
     useEffect(() => {
         const socket = new WebSocket('ws://localhost:8080');
-        const callback = (event: any) => {
-            const data = JSON.parse(event.data);
 
-            console.log(data);
-        };
-
-        socket.addEventListener('message', callback);
-
-        return () => {
-            socket.removeEventListener('message', callback);
-        };
+        setSocket(socket);
     }, []);
+
+    useEffect(() => {
+        if (socket) {
+            const callback = (event: any) => {
+                const data = JSON.parse(event.data);
+
+                if (data.destination === destination) {
+                    setCabs(data.cabs);
+                }
+            };
+
+            socket.addEventListener('message', callback);
+
+            return () => {
+                socket.removeEventListener('message', callback);
+            };
+        }
+    }, [socket, destination]);
 
     return (
         <FocusPageLayout>
@@ -46,9 +70,17 @@ export const CabServicePage = () => {
                         ]}
                     />
                 </FormField>
-                <CabListItem model={'Tesla'} eta={10} segment={'Luxury'} />
-                <CabListItem model={'Tesla'} eta={10} segment={'Luxury'} />
-                <CabListItem model={'Tesla'} eta={10} segment={'Luxury'} />
+                {cabs.map((cab) => (
+                    <CabListItem
+                        key={cab.id}
+                        model={cab.model}
+                        eta={cab.minutesAway}
+                        segment={cab.segment}
+                        capacity={cab.capacity}
+                        rating={cab.rating}
+                        impediment={cab.isInTrafficJam ? 'Traffic jam' : undefined}
+                    />
+                ))}
             </PageContents>
         </FocusPageLayout>
     );
