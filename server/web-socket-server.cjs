@@ -137,7 +137,7 @@ var Collection = /** @class */ (function () {
 }());
 var destinations = {
     'main-venue': new Collection(),
-    'speakers-entrance': new Collection(),
+    'players-entrance': new Collection(),
     backstage: new Collection(),
     'cargo-entry': new Collection(),
 };
