@@ -16,7 +16,9 @@ export const LandingPage = () => {
                     <Link to="/schedule">Event schedule</Link>
                 </MainMenu.Item>
                 <MainMenu.Item>
-                    <Link to="/cab-service">Cab service</Link>
+                    <Link to="/cab-service" data-test="cab-service">
+                        Cab service
+                    </Link>
                 </MainMenu.Item>
             </MainMenu>
         </FocusPageLayout>

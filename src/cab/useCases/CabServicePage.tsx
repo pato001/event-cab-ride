@@ -73,6 +73,7 @@ export const CabServicePage = () => {
                 </FormField>
                 <FormField label="Destination">
                     <Select
+                        data-test="destination"
                         value={destination}
                         onChange={(e) => setDestination(e.target.value)}
                         items={[
@@ -83,17 +84,19 @@ export const CabServicePage = () => {
                         ]}
                     />
                 </FormField>
-                {sortCabsList(cabs).map((cab) => (
-                    <CabListItem
-                        key={cab.id}
-                        model={cab.model}
-                        eta={cab.minutesAway}
-                        segment={cab.segment}
-                        capacity={cab.capacity}
-                        rating={cab.rating}
-                        impediment={cab.isInTrafficJam ? 'Traffic jam' : undefined}
-                    />
-                ))}
+                <div data-test={'cabs-list'}>
+                    {sortCabsList(cabs).map((cab) => (
+                        <CabListItem
+                            key={cab.id}
+                            model={cab.model}
+                            eta={cab.minutesAway}
+                            segment={cab.segment}
+                            capacity={cab.capacity}
+                            rating={cab.rating}
+                            impediment={cab.isInTrafficJam ? 'Traffic jam' : undefined}
+                        />
+                    ))}
+                </div>
             </PageContents>
         </FocusPageLayout>
     );
