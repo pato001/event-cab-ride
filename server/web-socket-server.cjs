@@ -155,7 +155,7 @@ wss.on('connection', function (ws) {
     tick();
     setInterval(function () {
         tick();
-    }, 1000 * (getMinute() / 3));
+    }, 1000 * (getMinute() / 30));
     ws.on('error', console.error);
     // ws.on('message', (data) => {
     //     console.log('received: %s', data);
