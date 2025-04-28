@@ -197,7 +197,7 @@ wss.on('connection', (ws) => {
         () => {
             tick();
         },
-        1000 * (getMinute() / 3),
+        1000 * (getMinute() / 30),
     );
 
     ws.on('error', console.error);
